@@ -14,6 +14,8 @@ public class MmnMarker : MonoBehaviour {
 	public int numStimuli = 10;
 	public float pDeviant = 0.2f;
 
+	private bool isTriggering = false;
+
 	virtual protected void Start () {
 		Assert.IsNotNull(markerStream, "You forgot to assign the reference to a marker stream implementation!");
 
@@ -23,8 +25,10 @@ public class MmnMarker : MonoBehaviour {
 	}
 
 	virtual protected void Update () {
-		if (Input.GetKeyUp(KeyCode.Space) && markerStream != null)
-			StartCoroutine(WriteContinouslyMarkerEachSecond());
+		if (isTriggering == false && Input.GetKeyUp (KeyCode.Space) && markerStream != null) {
+			StartCoroutine (WriteContinouslyMarkerEachSecond ());
+			isTriggering = true;
+		}
 	}
 
 	IEnumerator WriteContinouslyMarkerEachSecond()
@@ -51,6 +55,8 @@ public class MmnMarker : MonoBehaviour {
 			presentBreak();
 			yield return new WaitForSecondsRealtime(timeISI);
 		}
+
+		isTriggering = false;
 	}
 
 	virtual protected void presentStandard()
