@@ -7,29 +7,22 @@ using Assets.LSL4Unity.Scripts;
 
 public class MmnMarker : MonoBehaviour {
 
-	public GameObject[] stimulusObjects;
 	public LSLMarkerStream markerStream;
 	public float timeDuration = 0.5f;
 	private float timeISI;
 	public float timeSOA = 1.0f;
-	public int numStimuli;
-	public float pDeviant;
+	public int numStimuli = 10;
+	public float pDeviant = 0.2f;
 
-	void Start () {
+	virtual protected void Start () {
 		Assert.IsNotNull(markerStream, "You forgot to assign the reference to a marker stream implementation!");
-
-		Assert.IsFalse (stimulusObjects.Length < 2, "Not enough stimulus objects are defined");
-
-		foreach (var obj in stimulusObjects) {
-			obj.GetComponent<Renderer> ().enabled = false;
-		}
 
 		timeISI = timeSOA - timeDuration;
 		Assert.IsTrue (timeISI > 0, "SOA must be longer than stimuls duration");
 		Assert.IsTrue (pDeviant > 0 && pDeviant < 0.5, "deviant probability must be within 0 and 0.5");
 	}
 
-	void Update () {
+	virtual protected void Update () {
 		if (Input.GetKeyUp(KeyCode.Space) && markerStream != null)
 			StartCoroutine(WriteContinouslyMarkerEachSecond());
 	}
@@ -60,20 +53,17 @@ public class MmnMarker : MonoBehaviour {
 		}
 	}
 
-	void presentStandard()
+	virtual protected void presentStandard()
 	{
-		stimulusObjects[0].GetComponent<Renderer> ().enabled = true;
+		Debug.Log ("Standard stimulus");
 	}
 
-	void presentDeviant()
+	virtual protected void presentDeviant()
 	{
-		stimulusObjects[1].GetComponent<Renderer> ().enabled = true;
+		Debug.Log ("Deviant stimulus");
 	}
 
-	void presentBreak()
+	virtual protected void presentBreak()
 	{
-		foreach (var obj in stimulusObjects) {
-			obj.GetComponent<Renderer> ().enabled = false;
-		}
 	}
 }
