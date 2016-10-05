@@ -13,6 +13,7 @@ public class MmnMarker : MonoBehaviour {
 	public float timeSOA = 1.0f;
 	public int numStimuli = 10;
 	public float pDeviant = 0.2f;
+	public double time_offset = 0;
 
 	private bool isTriggering = false;
 
@@ -41,13 +42,13 @@ public class MmnMarker : MonoBehaviour {
 		for(int i = 0; i < numStimuli; i++)
 		{
 			if (i == nextDeviant) {
-				markerStream.Write("Deviant");
+				markerStream.Write("Deviant", LSL.liblsl.local_clock () + time_offset);
 				presentDeviant ();
 
 				nextDeviant = i + 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow);
 			}
 			else {
-				markerStream.Write ("Standard");
+				markerStream.Write ("Standard", LSL.liblsl.local_clock () + time_offset);
 				presentStandard ();
 			}
 			yield return new WaitForSecondsRealtime(timeDuration);
