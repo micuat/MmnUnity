@@ -26,9 +26,12 @@ public class MmnMarker : MonoBehaviour {
 	}
 
 	virtual protected void Update () {
-		if (isTriggering == false && Input.GetKeyUp (KeyCode.Space) && markerStream != null) {
-			StartCoroutine (WriteContinouslyMarkerEachSecond ());
-			isTriggering = true;
+		if (isTriggering == false && markerStream != null) {
+			if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+				|| Input.GetKeyUp (KeyCode.Space)) {
+				StartCoroutine (WriteContinouslyMarkerEachSecond ());
+				isTriggering = true;
+			}
 		}
 	}
 
