@@ -6,10 +6,24 @@ public class MmnShapeMarker : MmnMarker {
 	public GameObject standardObject;
 	public GameObject deviantObject;
 
+	void SetVisibility(GameObject g, bool visible) {
+		var r = g.GetComponent<Renderer>();
+		if(r != null) {
+			r.enabled = visible;
+		}
+		foreach (Transform c in g.transform)
+		{
+			var rc = c.gameObject.GetComponent<Renderer>();
+			if(rc != null) {
+				rc.enabled = visible;
+			}
+		}
+	}
+
 	// Use this for initialization
 	override protected void Start () {
-		standardObject.GetComponent<Renderer> ().enabled = false;
-		deviantObject.GetComponent<Renderer> ().enabled = false;
+		SetVisibility(standardObject, false);
+		SetVisibility(deviantObject, false);
 
 		base.Start ();
 	}
@@ -21,17 +35,17 @@ public class MmnShapeMarker : MmnMarker {
 
 	override protected void presentStandard()
 	{
-		standardObject.GetComponent<Renderer> ().enabled = true;
+		SetVisibility(standardObject, true);
 	}
 
 	override protected void presentDeviant()
 	{
-		deviantObject.GetComponent<Renderer> ().enabled = true;
+		SetVisibility(deviantObject, true);
 	}
 
 	override protected void presentBreak()
 	{
-		standardObject.GetComponent<Renderer> ().enabled = false;
-		deviantObject.GetComponent<Renderer> ().enabled = false;
+		SetVisibility(standardObject, false);
+		SetVisibility(deviantObject, false);
 	}
 }
