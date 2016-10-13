@@ -13,10 +13,7 @@ public class MmnShapeMarker : MmnMarker {
 		}
 		foreach (Transform c in g.transform)
 		{
-			var rc = c.gameObject.GetComponent<Renderer>();
-			if(rc != null) {
-				rc.enabled = visible;
-			}
+			SetVisibility(c.gameObject, visible);
 		}
 	}
 
@@ -27,7 +24,7 @@ public class MmnShapeMarker : MmnMarker {
 
 		base.Start ();
 	}
-	
+
 	// Update is called once per frame
 	override protected void Update () {
 		base.Update ();
