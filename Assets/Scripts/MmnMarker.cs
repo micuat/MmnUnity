@@ -11,6 +11,7 @@ public class MmnMarker : MonoBehaviour {
 	public float timeDuration = 0.5f;
 	private float timeISI;
 	public float timeSOA = 1.0f;
+	public float timeStartOffset = 1.0f;
 	public int numStimuli = 10;
 	public float pDeviant = 0.2f;
 	public double time_offset = 0;
@@ -41,6 +42,8 @@ public class MmnMarker : MonoBehaviour {
 		int minStandardsInRow = meanStandardsInRow / 2;
 		int maxStandardsInRow = meanStandardsInRow * 3 / 2;
 		int nextDeviant = 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow);
+
+		yield return new WaitForSecondsRealtime(timeStartOffset);
 
 		for(int i = 0; i < numStimuli; i++)
 		{
