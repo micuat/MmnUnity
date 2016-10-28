@@ -14,15 +14,6 @@ public class SceneController : MonoBehaviour {
 	}
 
 	public void SelectScene(string sceneName) {
-        switch(sceneName)
-        {
-            case "MmnVisual3DScene":
-            case "MmnVisualAnimalScene":
-                UnityEngine.VR.VRSettings.enabled = true;
-                break;
-            default:
-                break;
-        }
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
 	}
 }
