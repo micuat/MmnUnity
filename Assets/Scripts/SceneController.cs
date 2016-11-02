@@ -4,11 +4,11 @@ using System.Collections;
 
 public class SceneController : MonoBehaviour {
 
-    private bool _Is3DEnv;
+    private bool is3DEnv;
     public bool Is3DEnv
     {
-        get { return instanceRef._Is3DEnv; }
-        set { instanceRef._Is3DEnv = value; }
+        get { return instanceRef.is3DEnv; }
+        set { instanceRef.is3DEnv = value; }
     }
 
     private static SceneController instanceRef;
@@ -17,7 +17,19 @@ public class SceneController : MonoBehaviour {
         get { return instanceRef; }
     }
 
-    public Toggle guiEnv;
+    private Toggle guiToggle3DEnv;
+    public Toggle GuiToggle3DEnv
+    {
+        get { return guiToggle3DEnv; }
+        set
+        {
+            guiToggle3DEnv = value;
+            if (guiToggle3DEnv != null)
+            {
+                guiToggle3DEnv.isOn = Is3DEnv;
+            }
+        }
+    }
 
     void Awake()
     {
@@ -25,12 +37,15 @@ public class SceneController : MonoBehaviour {
         {
             instanceRef = this;
             DontDestroyOnLoad(gameObject);
+
             Is3DEnv = false;
+            InstanceRef.GuiToggle3DEnv = GameObject.Find("Toggle3DEnv").GetComponent<Toggle>();
         }
         else
         {
-            // don't kill me... GUI requires this object
-            //DestroyImmediate(gameObject);
+            InstanceRef.GuiToggle3DEnv = GameObject.Find("Toggle3DEnv").GetComponent<Toggle>();
+
+            DestroyImmediate(gameObject);
         }
 
         UnityEngine.VR.VRSettings.enabled = false;
@@ -38,8 +53,8 @@ public class SceneController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        guiEnv.isOn = Is3DEnv;
-	}
+
+    }
 
 	// Update is called once per frame
 	void Update () {
