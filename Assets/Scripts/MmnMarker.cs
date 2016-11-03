@@ -38,12 +38,12 @@ public class MmnMarker : MonoBehaviour {
 
 	IEnumerator WriteContinouslyMarkerEachSecond()
 	{
-		int meanStandardsInRow = (int)((1.0f - pDeviant) / pDeviant);
-		int minStandardsInRow = meanStandardsInRow / 2;
-		int maxStandardsInRow = meanStandardsInRow * 3 / 2;
+		int meanStandardsInRow = Mathf.RoundToInt((1.0f - pDeviant) / pDeviant);
+		int minStandardsInRow = Mathf.RoundToInt(meanStandardsInRow / 2.0f);
+		int maxStandardsInRow = Mathf.RoundToInt(meanStandardsInRow * 3.0f / 2.0f);
 		int nextDeviant = 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow + 1);
 
-		yield return new WaitForSecondsRealtime(timeStartOffset);
+        yield return new WaitForSecondsRealtime(timeStartOffset);
 
 		for(int i = 0; i < numStimuli; i++)
 		{
@@ -51,7 +51,7 @@ public class MmnMarker : MonoBehaviour {
 				markerStream.Write("Deviant", LSL.liblsl.local_clock () + time_offset);
 				presentDeviant ();
 
-				nextDeviant = i + 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow);
+				nextDeviant = i + 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow + 1);
 			}
 			else {
 				markerStream.Write ("Standard", LSL.liblsl.local_clock () + time_offset);
