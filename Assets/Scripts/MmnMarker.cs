@@ -41,7 +41,7 @@ public class MmnMarker : MonoBehaviour {
 		int meanStandardsInRow = (int)((1.0f - pDeviant) / pDeviant);
 		int minStandardsInRow = meanStandardsInRow / 2;
 		int maxStandardsInRow = meanStandardsInRow * 3 / 2;
-		int nextDeviant = 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow);
+		int nextDeviant = 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow + 1);
 
 		yield return new WaitForSecondsRealtime(timeStartOffset);
 
