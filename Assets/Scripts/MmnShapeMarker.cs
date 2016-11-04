@@ -5,6 +5,7 @@ public class MmnShapeMarker : MmnMarker {
 
 	public GameObject standardObject;
 	public GameObject deviantObject;
+    string nextMarker = "";
 
 	void SetVisibility(GameObject g, bool visible) {
 		var r = g.GetComponent<Renderer>();
@@ -30,7 +31,21 @@ public class MmnShapeMarker : MmnMarker {
 		base.Update ();
 	}
 
-	override protected void presentStandard()
+    public void OnPostRender()
+    {
+        if(nextMarker != "")
+        {
+            markerStream.Write(nextMarker, LSL.liblsl.local_clock() + time_offset);
+            nextMarker = "";
+        }
+    }
+
+    override protected void writeMarker(string marker)
+    {
+        nextMarker = marker;
+    }
+
+    override protected void presentStandard()
 	{
 		SetVisibility(standardObject, true);
 	}

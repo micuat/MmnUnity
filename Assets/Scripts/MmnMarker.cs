@@ -48,13 +48,13 @@ public class MmnMarker : MonoBehaviour {
 		for(int i = 0; i < numStimuli; i++)
 		{
 			if (i == nextDeviant) {
-				markerStream.Write("Deviant", LSL.liblsl.local_clock () + time_offset);
+                writeMarker("Deviant");
 				presentDeviant ();
 
 				nextDeviant = i + 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow + 1);
 			}
 			else {
-				markerStream.Write ("Standard", LSL.liblsl.local_clock () + time_offset);
+                writeMarker("Standard");
 				presentStandard ();
 			}
 			yield return new WaitForSecondsRealtime(timeDuration);
@@ -66,7 +66,12 @@ public class MmnMarker : MonoBehaviour {
 		isTriggering = false;
 	}
 
-	virtual protected void presentStandard()
+    virtual protected void writeMarker(string marker)
+    {
+        markerStream.Write(marker, LSL.liblsl.local_clock() + time_offset);
+    }
+
+    virtual protected void presentStandard()
 	{
 		Debug.Log ("Standard stimulus");
 	}
