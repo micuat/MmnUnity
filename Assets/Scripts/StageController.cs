@@ -24,8 +24,8 @@ public class StageController : MonoBehaviour {
             {
                 environmentObject.SetActive(false);
             }
-            Camera.main.clearFlags = CameraClearFlags.Color;
-            Camera.main.backgroundColor = Color.black;
+            //Camera.main.clearFlags = CameraClearFlags.Color;
+            //Camera.main.backgroundColor = Color.black;
         }
     }
 
