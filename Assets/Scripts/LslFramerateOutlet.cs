@@ -10,7 +10,7 @@ public class LslFramerateOutlet : MonoBehaviour
     private liblsl.StreamInfo streamInfo;
     private float[] currentSample;
 
-    public string StreamName = "UnityStream";
+    public string StreamName = "UnityFramerateStream";
     public string StreamType = "FPS";
     public int ChannelCount = 1;
 
