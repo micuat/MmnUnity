@@ -12,7 +12,7 @@ public class LslFramerateOutlet : MonoBehaviour
 
     public string StreamName = "UnityFramerateStream";
     public string StreamType = "FPS";
-    public int ChannelCount = 1;
+    private int ChannelCount = 1;
 
     // Use this for initialization
     void Start()
