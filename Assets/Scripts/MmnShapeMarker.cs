@@ -35,7 +35,7 @@ public class MmnShapeMarker : MmnMarker {
     {
         if(nextMarker != "")
         {
-            markerStream.Write(nextMarker, LSL.liblsl.local_clock() + time_offset);
+            markerStream.Write(nextMarker, LSL.liblsl.local_clock() + timeLSLRecordingOffset);
             nextMarker = "";
         }
     }

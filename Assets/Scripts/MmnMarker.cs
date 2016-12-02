@@ -11,10 +11,10 @@ public class MmnMarker : MonoBehaviour {
 	public float timeDuration = 0.5f;
 	private float timeISI;
 	public float timeSOA = 1.0f;
-	public float timeStartOffset = 1.0f;
+	public float timeDelayToStart = 1.0f;
 	public int numStimuli = 10;
 	public float pDeviant = 0.2f;
-	public double time_offset = 0;
+	public double timeLSLRecordingOffset = 0;
 
 	private bool isTriggering = false;
 
@@ -43,7 +43,7 @@ public class MmnMarker : MonoBehaviour {
 		int maxStandardsInRow = Mathf.RoundToInt(meanStandardsInRow * 3.0f / 2.0f);
 		int nextDeviant = 1 + UnityEngine.Random.Range (minStandardsInRow, maxStandardsInRow + 1);
 
-        yield return new WaitForSecondsRealtime(timeStartOffset);
+        yield return new WaitForSecondsRealtime(timeDelayToStart);
 
 		for(int i = 0; i < numStimuli; i++)
 		{
@@ -68,7 +68,7 @@ public class MmnMarker : MonoBehaviour {
 
     virtual protected void writeMarker(string marker)
     {
-        markerStream.Write(marker, LSL.liblsl.local_clock() + time_offset);
+        markerStream.Write(marker, LSL.liblsl.local_clock() + timeLSLRecordingOffset);
     }
 
     virtual protected void presentStandard()
