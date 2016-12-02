@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 using System;
 
 using Assets.LSL4Unity.Scripts;
+using System.Collections.Generic;
 
 public class MmnMarker : MonoBehaviour {
 
@@ -12,9 +13,10 @@ public class MmnMarker : MonoBehaviour {
 	private float timeISI;
 	public float timeSOA = 1.0f;
 	public float timeDelayToStart = 1.0f;
-	public int numStimuli = 10;
+	public int[] numStimuli = { 10, 10 };
 	public float pDeviant = 0.2f;
 	public double timeLSLRecordingOffset = 0;
+    int currentTrial = 0;
 
 	private bool isTriggering = false;
 
@@ -27,7 +29,7 @@ public class MmnMarker : MonoBehaviour {
 	}
 
 	virtual protected void Update () {
-		if (isTriggering == false && markerStream != null) {
+		if (isTriggering == false && markerStream != null && currentTrial < numStimuli.Length) {
 			if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
 				|| Input.GetKeyUp (KeyCode.Space)) {
 				StartCoroutine (WriteContinouslyMarkerEachSecond ());
@@ -45,7 +47,7 @@ public class MmnMarker : MonoBehaviour {
 
         yield return new WaitForSecondsRealtime(timeDelayToStart);
 
-		for(int i = 0; i < numStimuli; i++)
+		for(int i = 0; i < numStimuli[currentTrial]; i++)
 		{
 			if (i == nextDeviant) {
                 writeMarker("Deviant");
@@ -64,6 +66,7 @@ public class MmnMarker : MonoBehaviour {
 		}
 
 		isTriggering = false;
+        currentTrial += 1;
 	}
 
     virtual protected void writeMarker(string marker)
